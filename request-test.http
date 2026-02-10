@@ -1,0 +1,11 @@
+
+
+
+### Security Requests
+
+
+
+###
+GET /api/v1/rental-service/security/csrf-token
+Host: localhost:8765
+Accept: application/json

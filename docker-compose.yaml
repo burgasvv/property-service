@@ -1,0 +1,3 @@
+
+include:
+  - rental-service/docker-compose.yaml
