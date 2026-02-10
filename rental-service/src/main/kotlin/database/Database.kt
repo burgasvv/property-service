@@ -1,5 +1,6 @@
 package org.burgas.database
 
+import io.ktor.server.application.Application
 import kotlinx.datetime.toKotlinLocalDate
 import kotlinx.serialization.Serializable
 import org.burgas.serialization.UUIDSerializer
@@ -189,8 +190,9 @@ object PropertyDocumentTable : Table("property_document") {
         get() = PrimaryKey(arrayOf(propertyId, documentId))
 }
 
+@Suppress("UnusedReceiverParameter")
 @OptIn(ExperimentalUuidApi::class)
-fun configureDatabase() {
+fun Application.configureDatabase() {
     transaction(db = DatabaseFactory.postgres) {
         SchemaUtils.create(
             ImageTable, DocumentTable, IdentityTable, CategoryTable,
