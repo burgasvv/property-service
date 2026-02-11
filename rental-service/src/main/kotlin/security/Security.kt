@@ -2,23 +2,12 @@ package org.burgas.security
 
 import io.ktor.http.*
 import io.ktor.server.application.*
-import io.ktor.server.auth.UserIdPrincipal
-import io.ktor.server.auth.UserPasswordCredential
-import io.ktor.server.auth.authentication
-import io.ktor.server.auth.basic
-import io.ktor.server.auth.form
-import io.ktor.server.plugins.cors.routing.CORS
-import io.ktor.server.plugins.csrf.CSRF
+import io.ktor.server.auth.*
+import io.ktor.server.plugins.cors.routing.*
+import io.ktor.server.plugins.csrf.*
 import io.ktor.server.plugins.statuspages.*
 import io.ktor.server.response.*
-import io.ktor.server.routing.get
-import io.ktor.server.routing.route
-import io.ktor.server.routing.routing
-import io.ktor.server.sessions.Sessions
-import io.ktor.server.sessions.cookie
-import io.ktor.server.sessions.get
-import io.ktor.server.sessions.sessions
-import io.ktor.server.sessions.set
+import io.ktor.server.sessions.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.serialization.Serializable
 import org.burgas.database.Authority
@@ -28,7 +17,7 @@ import org.burgas.database.IdentityTable
 import org.burgas.serialization.UUIDSerializer
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.mindrot.jbcrypt.BCrypt
-import java.util.UUID
+import java.util.*
 
 @Serializable
 data class ExceptionResponse(
@@ -100,6 +89,7 @@ fun Application.configureSecurity() {
 
     install(CSRF) {
         allowOrigin("http://localhost:9000")
+        allowOrigin("http://localhost:8765")
         originMatchesHost()
         checkHeader("X-CSRF-Token")
     }
@@ -122,22 +112,5 @@ fun Application.configureSecurity() {
 
     install(Sessions) {
         cookie<CsrfToken>("CSRF_TOKEN")
-    }
-
-    routing {
-
-        route("/api/v1/rental-service/security") {
-
-            get("/csrf-token") {
-                val csrfToken = call.sessions.get(CsrfToken::class)
-                if (csrfToken != null) {
-                    call.respond(HttpStatusCode.OK, csrfToken)
-                } else {
-                    val newToken = CsrfToken(UUID.randomUUID())
-                    call.sessions.set(newToken, CsrfToken::class)
-                    call.respond(HttpStatusCode.OK, newToken)
-                }
-            }
-        }
     }
 }

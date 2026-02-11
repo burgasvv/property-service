@@ -91,3 +91,52 @@ Host: localhost:8765
 Accept: application/json
 X-Csrf-Token: 925da406-e751-45d3-bd12-d52ec7d25c49
 Authorization: Basic zagor@gmail.com zagor
+
+
+
+### Category Requests
+
+
+
+###
+GET /api/v1/rental-service/categories
+Host: localhost:8765
+Accept: application/json
+
+###
+GET /api/v1/rental-service/categories/by-id?categoryId=4ca2efb1-947f-4f21-851b-6b56e7b00a3f
+Host: localhost:8765
+Accept: application/json
+
+###
+POST /api/v1/rental-service/categories/create
+Host: localhost:8765
+Accept: application/json
+Content-Type: application/json
+X-Csrf-Token: e72413b7-9e35-4d65-9c1e-91ed4ab678fc
+Authorization: Basic burgasvv@gmail.com burgasvv
+
+{
+    "name": "Офисы",
+    "description": "Описание категории Офисы"
+}
+
+###
+PUT /api/v1/rental-service/categories/update
+Host: localhost:8765
+Accept: application/json
+Content-Type: application/json
+X-Csrf-Token: e72413b7-9e35-4d65-9c1e-91ed4ab678fc
+Authorization: Basic burgasvv@gmail.com burgasvv
+
+{
+    "id": "067b8f92-625f-4f0a-9209-27bf614270ff",
+    "name": "Офисы Тест"
+}
+
+###
+DELETE /api/v1/rental-service/categories/delete?categoryId=067b8f92-625f-4f0a-9209-27bf614270ff
+Host: localhost:8765
+Accept: application/json
+X-Csrf-Token: e72413b7-9e35-4d65-9c1e-91ed4ab678fc
+Authorization: Basic burgasvv@gmail.com burgasvv
