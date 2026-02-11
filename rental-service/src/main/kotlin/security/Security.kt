@@ -1,7 +1,12 @@
-package org.burgas.routing
+package org.burgas.security
 
 import io.ktor.http.*
 import io.ktor.server.application.*
+import io.ktor.server.auth.UserIdPrincipal
+import io.ktor.server.auth.UserPasswordCredential
+import io.ktor.server.auth.authentication
+import io.ktor.server.auth.basic
+import io.ktor.server.auth.form
 import io.ktor.server.plugins.cors.routing.CORS
 import io.ktor.server.plugins.csrf.CSRF
 import io.ktor.server.plugins.statuspages.*
@@ -14,8 +19,15 @@ import io.ktor.server.sessions.cookie
 import io.ktor.server.sessions.get
 import io.ktor.server.sessions.sessions
 import io.ktor.server.sessions.set
+import kotlinx.coroutines.Dispatchers
 import kotlinx.serialization.Serializable
+import org.burgas.database.Authority
+import org.burgas.database.DatabaseFactory
+import org.burgas.database.IdentityEntity
+import org.burgas.database.IdentityTable
 import org.burgas.serialization.UUIDSerializer
+import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
+import org.mindrot.jbcrypt.BCrypt
 import java.util.UUID
 
 @Serializable
@@ -31,7 +43,49 @@ data class CsrfToken(
     val token: UUID
 )
 
-fun Application.configureRouting() {
+fun Application.configureSecurity() {
+
+    authentication {
+
+        basic(name = "basic-auth-all") {
+            validate { credentials ->
+                val identityEntity = newSuspendedTransaction(
+                    db = DatabaseFactory.postgres, context = Dispatchers.Default, readOnly = true
+                ) {
+                    IdentityEntity.find { IdentityTable.email eq credentials.name }.singleOrNull()
+                }
+                if (
+                    identityEntity != null && identityEntity.enabled &&
+                    BCrypt.checkpw(credentials.password, identityEntity.password)
+                ) {
+                    UserPasswordCredential(credentials.name, credentials.password)
+
+                } else {
+                    null
+                }
+            }
+        }
+
+        basic("basic-auth-admin") {
+            validate { credentials ->
+                val identityEntity = newSuspendedTransaction(
+                    db = DatabaseFactory.postgres, context = Dispatchers.Default, readOnly = true
+                ) {
+                    IdentityEntity.find { IdentityTable.email eq credentials.name }.singleOrNull()
+                }
+                if (
+                    identityEntity != null && identityEntity.enabled &&
+                    BCrypt.checkpw(credentials.password, identityEntity.password) &&
+                    identityEntity.authority == Authority.ADMIN
+                ) {
+                    UserPasswordCredential(credentials.name, credentials.password)
+
+                } else {
+                    null
+                }
+            }
+        }
+    }
 
     install(StatusPages) {
         exception<Throwable> { call, cause ->

@@ -1,21 +1,30 @@
 package org.burgas
 
 import io.ktor.server.application.*
+import io.ktor.server.engine.*
+import io.ktor.server.netty.*
 import org.burgas.database.configureDatabase
-import org.burgas.routing.configureRouting
+import org.burgas.routing.configureDocumentRouting
+import org.burgas.routing.configureIdentityRouting
+import org.burgas.routing.configureImageRouting
+import org.burgas.security.configureSecurity
 import org.burgas.serialization.configureSerialization
-import org.burgas.service.configureDocumentRoutes
-import org.burgas.service.configureImageRoutes
 
-fun main(args: Array<String>) {
-    io.ktor.server.netty.EngineMain.main(args)
+fun main() {
+    embeddedServer(
+        factory = Netty,
+        port = 9000,
+        host = "0.0.0.0",
+        module = Application::module
+    ).start(wait = true)
 }
 
 fun Application.module() {
     configureSerialization()
-    configureRouting()
+    configureSecurity()
     configureDatabase()
 
-    configureImageRoutes()
-    configureDocumentRoutes()
+    configureImageRouting()
+    configureDocumentRouting()
+    configureIdentityRouting()
 }

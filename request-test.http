@@ -9,3 +9,85 @@
 GET /api/v1/rental-service/security/csrf-token
 Host: localhost:8765
 Accept: application/json
+
+
+
+### Identity Requests
+
+
+
+###
+GET /api/v1/rental-service/identities
+Host: localhost:8765
+Accept: application/json
+Authorization: Basic burgasvv@gmail.com burgasvv
+
+###
+GET /api/v1/rental-service/identities/by-id?identityId=b666b330-7e92-46b5-8239-4116c3d3802f
+Host: localhost:8765
+Accept: application/json
+Authorization: Basic burgasvv@gmail.com burgasvv
+
+###
+POST /api/v1/rental-service/identities/create
+Host: localhost:8765
+Accept: application/json
+Content-Type: application/json
+X-Csrf-Token: 453471e9-c9bc-4d14-bae8-64a57057c92b
+
+{
+    "authority": "USER",
+    "username": "zagorulko",
+    "password": "zagor",
+    "email": "zagor@gmail.com",
+    "enabled": true,
+    "firstname": "Загорулько",
+    "lastname": "Борис",
+    "patronymic": "Юрьевич"
+}
+
+###
+PUT /api/v1/rental-service/identities/update
+Host: localhost:8765
+Accept: application/json
+Content-Type: application/json
+X-Csrf-Token: 453471e9-c9bc-4d14-bae8-64a57057c92b
+Authorization: Basic zagor@gmail.com zagor
+
+{
+    "id": "f7de976b-4b7b-4df4-b57c-15f169b47c68",
+    "username": "zagor"
+}
+
+###
+PUT /api/v1/rental-service/identities/change-status
+Host: localhost:8765
+Accept: application/json
+Content-Type: application/json
+X-Csrf-Token: 453471e9-c9bc-4d14-bae8-64a57057c92b
+Authorization: Basic burgasvv@gmail.com burgasvv
+
+{
+    "id": "f7de976b-4b7b-4df4-b57c-15f169b47c68",
+    "enabled": true
+}
+
+###
+PUT /api/v1/rental-service/identities/change-password
+Host: localhost:8765
+Accept: application/json
+Content-Type: application/json
+X-Csrf-Token: 925da406-e751-45d3-bd12-d52ec7d25c49
+Authorization: Basic burgasvv@gmail.com burgasvv111
+
+{
+    "id": "b666b330-7e92-46b5-8239-4116c3d3802f",
+    "password": "burgasvv"
+}
+
+###
+DELETE /api/v1/rental-service/identities/delete?identityId=f7de976b-4b7b-4df4-b57c-15f169b47c68
+Host: localhost:8765
+Accept: application/json
+X-Csrf-Token: 925da406-e751-45d3-bd12-d52ec7d25c49
+Authorization: Basic zagor@gmail.com zagor

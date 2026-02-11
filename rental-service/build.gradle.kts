@@ -16,6 +16,11 @@ kotlin {
     jvmToolchain(24)
 }
 
+java {
+    sourceCompatibility = JavaVersion.VERSION_24
+    targetCompatibility = JavaVersion.VERSION_24
+}
+
 dependencies {
     implementation("io.ktor:ktor-server-core")
     implementation("io.ktor:ktor-server-content-negotiation")
@@ -35,6 +40,8 @@ dependencies {
     implementation("org.jetbrains.exposed:exposed-kotlin-datetime:0.61.0")
     implementation("redis.clients:jedis:7.2.1")
     implementation("org.mindrot:jbcrypt:0.4")
+    implementation("io.ktor:ktor-server-auth:3.4.0")
+    implementation("io.ktor:ktor-server-auth:3.4.0")
     testImplementation("io.ktor:ktor-server-test-host")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:2.3.10")
 }

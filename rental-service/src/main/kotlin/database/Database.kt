@@ -290,8 +290,8 @@ data class IdentityFullResponse(
     val lastname: String? = null,
     val patronymic: String? = null,
     val image: ImageResponse? = null,
-    val ownerProperties: List<PropertyShortResponse>? = null,
-    val tenantProperties: List<PropertyShortResponse>? = null
+    val ownerProperties: List<PropertyWithCategoryResponse>? = null,
+    val tenantProperties: List<PropertyWithCategoryResponse>? = null
 )
 
 @Serializable
@@ -338,10 +338,23 @@ data class PropertyRequest(
 data class PropertyShortResponse(
     @Serializable(with = UUIDSerializer::class)
     val id: UUID? = null,
+    val name: String? = null,
+    val address: String? = null,
+    val description: String? = null,
+    val images: List<ImageResponse>? = null,
+    val documents: List<DocumentResponse>? = null
+)
+
+@Serializable
+data class PropertyWithCategoryResponse(
+    @Serializable(with = UUIDSerializer::class)
+    val id: UUID? = null,
     val category: CategoryShortResponse? = null,
     val name: String? = null,
     val address: String? = null,
-    val description: String? = null
+    val description: String? = null,
+    val images: List<ImageResponse>? = null,
+    val documents: List<DocumentResponse>? = null
 )
 
 @Serializable
@@ -387,7 +400,7 @@ data class AdvertisementFullResponse(
     val id: UUID? = null,
     val title: String? = null,
     val description: String? = null,
-    val property: PropertyShortResponse? = null,
+    val property: PropertyWithCategoryResponse? = null,
     val price: Double? = null,
     val date: String? = null
 )
