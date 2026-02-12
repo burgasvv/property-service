@@ -29,6 +29,7 @@ class ImageService {
         ImageEntity.findById(imageId) ?: throw IllegalArgumentException("Image not found")
     }
 
+
     @OptIn(InternalAPI::class)
     suspend fun upload(multiPartData: MultiPartData) = newSuspendedTransaction(
         db = DatabaseFactory.postgres,
@@ -37,6 +38,10 @@ class ImageService {
     ) {
         val imageResponses = mutableListOf<ImageEntity>()
         multiPartData.forEachPart { partData ->
+
+            if (partData.contentType?.contentType != "image")
+                throw IllegalArgumentException("File must be image type")
+
             if (partData is PartData.FileItem) {
                 val imageResponse = ImageEntity.new {
                     this.name = partData.originalFileName ?: throw IllegalArgumentException("Part data name is null")
@@ -44,17 +49,18 @@ class ImageService {
                     this.preview = false
                     this.data = ExposedBlob(partData.provider().readBuffer.readByteArray())
                 }
+
                 imageResponses.add(imageResponse)
             }
         }
         imageResponses
     }
 
-    suspend fun delete(imageId: UUID) = newSuspendedTransaction(
+    suspend fun delete(imageIds: List<UUID>) = newSuspendedTransaction(
         db = DatabaseFactory.postgres,
         context = Dispatchers.Default,
         transactionIsolation = Connection.TRANSACTION_READ_COMMITTED
     ) {
-        (ImageEntity.findById(imageId) ?: throw IllegalArgumentException("Image not found")).delete()
+        ImageEntity.forIds(imageIds).forEach { it.delete() }
     }
 }

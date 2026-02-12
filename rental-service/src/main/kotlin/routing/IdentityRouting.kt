@@ -52,18 +52,18 @@ fun Application.configureIdentityRouting() {
                     ?: throw IllegalArgumentException("Principal not found for authentication")
                 val identityId = UUID.fromString(call.parameters["identityId"])
 
-                val identityEntity = newSuspendedTransaction(
+                newSuspendedTransaction(
                     db = DatabaseFactory.postgres, context = Dispatchers.Default, readOnly = true
                 ) {
-                    IdentityEntity.findById(identityId)
+                    val identityEntity = IdentityEntity.findById(identityId)
                         ?: throw IllegalArgumentException("Identity not found for authentication")
-                }
 
-                if (identityEntity.email == principal.name) {
-                    proceed()
+                    if (identityEntity.email == principal.name) {
+                        proceed()
 
-                } else {
-                    throw IllegalArgumentException("Identity not authorized")
+                    } else {
+                        throw IllegalArgumentException("Identity not authorized")
+                    }
                 }
 
             } else if (requestPathWithBodyList.contains(call.request.path())) {
@@ -74,19 +74,19 @@ fun Application.configureIdentityRouting() {
                 val identityId = identityRequest.id
                     ?: throw IllegalArgumentException("Identity Request id not found for authentication")
 
-                val identityEntity = newSuspendedTransaction(
+                newSuspendedTransaction(
                     db = DatabaseFactory.postgres, context = Dispatchers.Default, readOnly = true
                 ) {
-                    IdentityEntity.findById(identityId)
+                    val identityEntity = IdentityEntity.findById(identityId)
                         ?: throw IllegalArgumentException("Identity not found for authentication")
-                }
 
-                if (identityEntity.email == principal.name) {
-                    call.attributes[AttributeKey<IdentityRequest>("identityRequest")] = identityRequest
-                    proceed()
+                    if (identityEntity.email == principal.name) {
+                        call.attributes[AttributeKey<IdentityRequest>("identityRequest")] = identityRequest
+                        proceed()
 
-                } else {
-                    throw IllegalArgumentException("Identity not authorized")
+                    } else {
+                        throw IllegalArgumentException("Identity not authorized")
+                    }
                 }
             }
 

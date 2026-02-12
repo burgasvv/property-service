@@ -36,23 +36,28 @@ class DocumentService {
     ) {
         val documentEntities = mutableListOf<DocumentEntity>()
         multiPartData.forEachPart { partData ->
+
+            if (partData.contentType?.contentType != "application")
+                throw IllegalArgumentException("File must be application type")
+
             if (partData is PartData.FileItem) {
                 val documentEntity = DocumentEntity.new {
                     this.name = partData.originalFileName ?: throw IllegalArgumentException("Part data name is null")
                     this.contentType = "${partData.contentType?.contentType}/${partData.contentType?.contentSubtype}"
                     this.data = ExposedBlob(partData.provider().readBuffer.readByteArray())
                 }
+
                 documentEntities.add(documentEntity)
             }
         }
         documentEntities
     }
 
-    suspend fun delete(documentId: UUID) = newSuspendedTransaction(
+    suspend fun delete(documentIds: List<UUID>) = newSuspendedTransaction(
         db = DatabaseFactory.postgres,
         context = Dispatchers.Default,
         transactionIsolation = Connection.TRANSACTION_READ_COMMITTED
     ) {
-        (DocumentEntity.findById(documentId) ?: throw IllegalArgumentException("Document not found")).delete()
+        DocumentEntity.forIds(documentIds).forEach { it.delete() }
     }
 }

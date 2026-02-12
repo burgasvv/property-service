@@ -140,3 +140,85 @@ Host: localhost:8765
 Accept: application/json
 X-Csrf-Token: e72413b7-9e35-4d65-9c1e-91ed4ab678fc
 Authorization: Basic burgasvv@gmail.com burgasvv
+
+
+
+### Property Requests
+
+
+
+###
+GET /api/v1/rental-service/properties
+Host: localhost:8765
+Accept: application/json
+
+###
+GET /api/v1/rental-service/properties/by-id?propertyId=2d90e432-0a11-48f2-8832-b6682ba1a66a
+Host: localhost:8765
+Accept: application/json
+
+###
+POST /api/v1/rental-service/properties/create
+Host: localhost:8765
+Accept: application/json
+Content-Type: application/json
+X-Csrf-Token: 35dd7d4c-cf8c-4346-be77-922d802e5c72
+Authorization: Basic burgasvv@gmail.com burgasvv
+
+{
+    "categoryId": "4ca2efb1-947f-4f21-851b-6b56e7b00a3f",
+    "name": "Аркадьевский Отель",
+    "address": "г.Москва, ул.Твардовского, д.44б",
+    "description": "Описание недвижимости Аркадьевский Отель",
+    "ownerId": "b666b330-7e92-46b5-8239-4116c3d3802f"
+}
+
+###
+PUT /api/v1/rental-service/properties/update
+Host: localhost:8765
+Accept: application/json
+Content-Type: application/json
+X-Csrf-Token: 07510fec-ab72-4841-b6ed-ab7d66bb0b8c
+Authorization: Basic burgasvv@gmail.com burgasvv
+
+{
+    "id": "ae03cba8-5d06-4b5a-8098-6fe6e42a25e0",
+    "address": "г.Москва, ул.Твардовского, д.56/1"
+}
+
+###
+DELETE /api/v1/rental-service/properties/delete?propertyId=ae03cba8-5d06-4b5a-8098-6fe6e42a25e0
+Host: localhost:8765
+Accept: application/json
+X-Csrf-Token: 07510fec-ab72-4841-b6ed-ab7d66bb0b8c
+Authorization: Basic burgasvv@gmail.com burgasvv
+
+###
+DELETE /api/v1/rental-service/properties/remove-images?propertyId=2d90e432-0a11-48f2-8832-b6682ba1a66a
+Host: localhost:8765
+Accept: application/json
+Content-Type: application/json
+X-Csrf-Token: 9b66e171-5d5d-44a8-8800-938f2785fbee
+Authorization: Basic burgasvv@gmail.com burgasvv
+
+{
+    "imageIds": [
+        "26f0bb4e-fbda-4f2b-9cab-1ada40447470",
+        "c8baabb7-f833-4321-8d42-3755723d1653"
+    ]
+}
+
+###
+DELETE /api/v1/rental-service/properties/remove-documents?propertyId=2d90e432-0a11-48f2-8832-b6682ba1a66a
+Host: localhost:8765
+Accept: application/json
+Content-Type: application/json
+X-Csrf-Token: 321e7c2b-5820-401b-bb90-2b60e42c963c
+Authorization: Basic burgasvv@gmail.com burgasvv
+
+{
+    "documentIds": [
+        "3a893d72-b84a-4d72-b9ae-f9eb7d6b3323",
+        "269853a4-fea5-4b8f-8ca0-23a998e27954"
+    ]
+}

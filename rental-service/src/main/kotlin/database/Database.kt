@@ -1,6 +1,6 @@
 package org.burgas.database
 
-import io.ktor.server.application.Application
+import io.ktor.server.application.*
 import kotlinx.datetime.toKotlinLocalDate
 import kotlinx.serialization.Serializable
 import org.burgas.serialization.UUIDSerializer
@@ -403,4 +403,14 @@ data class AdvertisementFullResponse(
     val property: PropertyWithCategoryResponse? = null,
     val price: Double? = null,
     val date: String? = null
+)
+
+@Serializable
+data class ImageRequest(
+    val imageIds: List<@Serializable(with = UUIDSerializer::class) UUID>
+)
+
+@Serializable
+data class DocumentRequest(
+    val documentIds: List<@Serializable(with = UUIDSerializer::class) UUID>
 )

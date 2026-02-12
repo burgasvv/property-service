@@ -37,9 +37,9 @@ fun CategoryEntity.toCategoryFullResponse(): CategoryFullResponse {
 
 class CategoryService {
 
-    val redis = DatabaseFactory.redis
-    val categoryKey = "categoryFullResponse::%s"
-    val propertyKey = "propertyFullResponse::%s"
+    private val redis = DatabaseFactory.redis
+    private val categoryKey = "categoryFullResponse::%s"
+    private val propertyKey = "propertyFullResponse::%s"
 
     suspend fun create(categoryRequest: CategoryRequest) = newSuspendedTransaction(
         db = DatabaseFactory.postgres,

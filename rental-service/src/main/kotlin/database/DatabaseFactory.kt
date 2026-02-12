@@ -1,6 +1,8 @@
 package org.burgas.database
 
 import io.ktor.server.config.*
+import org.burgas.database.IdentityTable.password
+import org.burgas.database.IdentityTable.username
 import org.jetbrains.exposed.sql.Database
 import redis.clients.jedis.Jedis
 

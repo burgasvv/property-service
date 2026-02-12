@@ -4,11 +4,7 @@ import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import org.burgas.database.configureDatabase
-import org.burgas.routing.configureCategoryRouting
-import org.burgas.routing.configureDocumentRouting
-import org.burgas.routing.configureIdentityRouting
-import org.burgas.routing.configureImageRouting
-import org.burgas.routing.configureSecurityRouting
+import org.burgas.routing.*
 import org.burgas.security.configureSecurity
 import org.burgas.serialization.configureSerialization
 
@@ -31,4 +27,5 @@ fun Application.module() {
     configureDocumentRouting()
     configureIdentityRouting()
     configureCategoryRouting()
+    configurePropertyRouting()
 }

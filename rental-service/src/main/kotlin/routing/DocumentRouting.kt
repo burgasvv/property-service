@@ -3,6 +3,7 @@ package org.burgas.routing
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.Application
+import io.ktor.server.request.receive
 import io.ktor.server.request.receiveMultipart
 import io.ktor.server.response.respond
 import io.ktor.server.response.respondBytes
@@ -38,8 +39,8 @@ fun Application.configureDocumentRouting() {
             }
 
             delete("/delete") {
-                val documentId = UUID.fromString(call.pathParameters["documentId"])
-                documentService.delete(documentId)
+                val documentIds = call.receive<List<UUID>>()
+                documentService.delete(documentIds)
                 call.respond(HttpStatusCode.OK)
             }
         }

@@ -62,9 +62,9 @@ fun IdentityEntity.toIdentityFullResponse(): IdentityFullResponse {
 
 class IdentityService {
 
-    val redis = DatabaseFactory.redis
-    val identityKey = "identityFullResponse::%s"
-    val propertyKey = "propertyFullResponse::%s"
+    private val redis = DatabaseFactory.redis
+    private val identityKey = "identityFullResponse::%s"
+    private val propertyKey = "propertyFullResponse::%s"
 
     val imageService = ImageService()
 
@@ -190,7 +190,7 @@ class IdentityService {
             identityEntity.apply {
                 this.image = null
             }
-            imageService.delete(imageEntity.id.value)
+            imageService.delete(listOf(imageEntity.id.value))
         } else {
             throw IllegalArgumentException("Image not found")
         }

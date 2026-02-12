@@ -1,18 +1,12 @@
 package org.burgas.routing
 
-import io.ktor.http.ContentType
-import io.ktor.http.HttpStatusCode
-import io.ktor.server.application.Application
-import io.ktor.server.request.receiveMultipart
-import io.ktor.server.response.respond
-import io.ktor.server.response.respondBytes
-import io.ktor.server.routing.delete
-import io.ktor.server.routing.get
-import io.ktor.server.routing.post
-import io.ktor.server.routing.route
-import io.ktor.server.routing.routing
+import io.ktor.http.*
+import io.ktor.server.application.*
+import io.ktor.server.request.*
+import io.ktor.server.response.*
+import io.ktor.server.routing.*
 import org.burgas.service.ImageService
-import java.util.UUID
+import java.util.*
 
 fun Application.configureImageRouting() {
 
@@ -38,8 +32,8 @@ fun Application.configureImageRouting() {
             }
 
             delete("/delete") {
-                val imageId = UUID.fromString(call.parameters["imageId"])
-                imageService.delete(imageId)
+                val imageIds = call.receive<List<UUID>>()
+                imageService.delete(imageIds)
                 call.respond(HttpStatusCode.OK)
             }
         }
