@@ -39,7 +39,6 @@ class ImageEntity(id: EntityID<UUID>) : UUIDEntity(id) {
     var contentType by ImageTable.contentType
     var data by ImageTable.data
     var preview by ImageTable.preview
-    val identity by IdentityEntity optionalBackReferencedOn IdentityTable.imageId
 }
 
 object DocumentTable : UUIDTable("document") {
@@ -413,4 +412,12 @@ data class ImageRequest(
 @Serializable
 data class DocumentRequest(
     val documentIds: List<@Serializable(with = UUIDSerializer::class) UUID>
+)
+
+@Serializable
+data class RentPropertyRequest(
+    @Serializable(with = UUIDSerializer::class)
+    val tenantId: UUID,
+    @Serializable(with = UUIDSerializer::class)
+    val advertisementId: UUID
 )

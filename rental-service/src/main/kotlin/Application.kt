@@ -28,4 +28,5 @@ fun Application.module() {
     configureIdentityRouting()
     configureCategoryRouting()
     configurePropertyRouting()
+    configureAdvertisementRouting()
 }

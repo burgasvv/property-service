@@ -23,17 +23,17 @@ Accept: application/json
 Authorization: Basic burgasvv@gmail.com burgasvv
 
 ###
-GET /api/v1/rental-service/identities/by-id?identityId=b666b330-7e92-46b5-8239-4116c3d3802f
+GET /api/v1/rental-service/identities/by-id?identityId=df7d4c8d-d46b-41e0-a979-e0b8a9d0d873
 Host: localhost:8765
 Accept: application/json
-Authorization: Basic burgasvv@gmail.com burgasvv
+Authorization: Basic zagor@gmail.com zagor
 
 ###
 POST /api/v1/rental-service/identities/create
 Host: localhost:8765
 Accept: application/json
 Content-Type: application/json
-X-Csrf-Token: 453471e9-c9bc-4d14-bae8-64a57057c92b
+X-Csrf-Token: bccf8e66-f7b3-440e-9ee5-83f9ddeac78b
 
 {
     "authority": "USER",
@@ -162,7 +162,7 @@ POST /api/v1/rental-service/properties/create
 Host: localhost:8765
 Accept: application/json
 Content-Type: application/json
-X-Csrf-Token: 35dd7d4c-cf8c-4346-be77-922d802e5c72
+X-Csrf-Token: bccf8e66-f7b3-440e-9ee5-83f9ddeac78b
 Authorization: Basic burgasvv@gmail.com burgasvv
 
 {
@@ -221,4 +221,69 @@ Authorization: Basic burgasvv@gmail.com burgasvv
         "3a893d72-b84a-4d72-b9ae-f9eb7d6b3323",
         "269853a4-fea5-4b8f-8ca0-23a998e27954"
     ]
+}
+
+
+
+### Advertisement Requests
+
+
+
+###
+GET /api/v1/rental-service/advertisements
+Host: localhost:8765
+Accept: application/json
+
+###
+GET /api/v1/rental-service/advertisements/by-id?advertisementId=669ef2e9-bbe8-4c7c-9c72-b0c35ea675a1
+Host: localhost:8765
+Accept: application/json
+
+###
+POST /api/v1/rental-service/advertisements/create
+Host: localhost:8765
+Accept: application/json
+Content-Type: application/json
+X-Csrf-Token: bccf8e66-f7b3-440e-9ee5-83f9ddeac78b
+Authorization: Basic burgasvv@gmail.com burgasvv
+
+{
+    "title": "Аренда Аркадьевского Отеля",
+    "description": "Описание аренды Аркадьевского Отеля",
+    "propertyId": "f6d413c1-011f-43dd-af80-1236f6107648",
+    "price": 150400.50,
+    "date": "2026-02-10"
+}
+
+###
+PUT /api/v1/rental-service/advertisements/update
+Host: localhost:8765
+Accept: application/json
+Content-Type: application/json
+X-Csrf-Token: bccf8e66-f7b3-440e-9ee5-83f9ddeac78b
+Authorization: Basic burgasvv@gmail.com burgasvv
+
+{
+    "id": "1213621c-aff5-4e28-bd0a-e4557f628fed",
+    "price": 160500.20
+}
+
+###
+DELETE /api/v1/rental-service/advertisements/delete?advertisementId=1213621c-aff5-4e28-bd0a-e4557f628fed
+Host: localhost:8765
+Accept: application/json
+X-Csrf-Token: bccf8e66-f7b3-440e-9ee5-83f9ddeac78b
+Authorization: Basic burgasvv@gmail.com burgasvv
+
+###
+PUT /api/v1/rental-service/advertisements/rent-property
+Host: localhost:8765
+Accept: application/json
+Content-Type: application/json
+X-Csrf-Token: bccf8e66-f7b3-440e-9ee5-83f9ddeac78b
+Authorization: Basic zagor@gmail.com zagor
+
+{
+    "tenantId": "df7d4c8d-d46b-41e0-a979-e0b8a9d0d873",
+    "advertisementId": "b434aba1-7458-4cfe-ae46-94de08bdec9a"
 }
