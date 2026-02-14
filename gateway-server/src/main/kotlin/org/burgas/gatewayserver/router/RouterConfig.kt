@@ -19,6 +19,7 @@ class RouterConfig {
                     .path("/api/v1/rental-service/**")
                     .filters { filterSpec -> filterSpec.addRequestHeader(HttpHeaders.ORIGIN, rentalServiceUri) }
                     .uri(rentalServiceUri)
-            }.build()
+            }
+            .build()
     }
 }

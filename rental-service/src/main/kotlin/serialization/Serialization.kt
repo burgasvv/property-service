@@ -16,7 +16,10 @@ fun Application.configureSerialization() {
     install(ContentNegotiation) {
         json(
             Json {
+                prettyPrint = true
+                isLenient = true
                 ignoreUnknownKeys = true
+                encodeDefaults = false
             }
         )
     }

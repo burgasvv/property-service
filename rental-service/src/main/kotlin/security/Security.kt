@@ -95,13 +95,15 @@ fun Application.configureSecurity() {
     }
 
     install(CORS) {
-        allowMethod(HttpMethod.Options)
+        allowMethod(HttpMethod.Get)
+        allowMethod(HttpMethod.Post)
         allowMethod(HttpMethod.Put)
         allowMethod(HttpMethod.Delete)
         allowMethod(HttpMethod.Patch)
-        allowHeader(HttpHeaders.Authorization)
+        allowMethod(HttpMethod.Options)
 
         allowHeader("X-CSRF-Token")
+        allowHeader(HttpHeaders.Authorization)
         allowHeader(HttpHeaders.ContentType)
         allowHeader(HttpHeaders.Accept)
         allowHeader(HttpHeaders.Authorization)

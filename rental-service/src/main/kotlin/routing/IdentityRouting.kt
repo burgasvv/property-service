@@ -1,5 +1,7 @@
 package org.burgas.routing
 
+import io.github.flaxoos.ktor.server.plugins.kafka.components.toRecord
+import io.github.flaxoos.ktor.server.plugins.kafka.kafkaProducer
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.Application
 import io.ktor.server.application.ApplicationCallPipeline
@@ -20,6 +22,7 @@ import io.ktor.server.routing.route
 import io.ktor.server.routing.routing
 import io.ktor.util.AttributeKey
 import kotlinx.coroutines.Dispatchers
+import org.apache.kafka.clients.producer.ProducerRecord
 import org.burgas.database.DatabaseFactory
 import org.burgas.database.IdentityEntity
 import org.burgas.database.IdentityRequest
@@ -97,7 +100,11 @@ fun Application.configureIdentityRouting() {
 
             post("/create") {
                 val identityRequest = call.receive(IdentityRequest::class)
-                identityService.create(identityRequest)
+                val identityFullResponse = identityService.create(identityRequest)
+                val producerRecord = ProducerRecord(
+                    "identity-topic", "create-identity", identityFullResponse.toRecord()
+                )
+                kafkaProducer?.send(producerRecord)?.get()
                 call.respond(HttpStatusCode.OK)
             }
 
