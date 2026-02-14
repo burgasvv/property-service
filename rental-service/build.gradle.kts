@@ -46,6 +46,8 @@ dependencies {
     implementation("io.ktor:ktor-server-auth:3.4.0")
     implementation("io.github.flaxoos:ktor-server-kafka:2.2.1")
     implementation("io.ktor:ktor-client-core:3.4.0")
+    implementation("io.ktor:ktor-server-swagger:3.4.0")
+    implementation("io.ktor:ktor-server-routing-openapi:3.4.0")
     testImplementation("io.ktor:ktor-server-test-host")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:2.3.10")
 }

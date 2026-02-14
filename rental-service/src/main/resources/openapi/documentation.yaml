@@ -1,0 +1,1167 @@
+openapi: "3.1.0"
+info:
+  title: "property_service API"
+  description: "property_service API"
+  version: "1.0.0"
+servers:
+  - url: "http://localhost:9000"
+paths:
+  /api/v1/rental-service/categories:
+    get:
+      description: ""
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/CategoryShortResponse"
+  /api/v1/rental-service/categories/by-id:
+    get:
+      description: ""
+      parameters:
+        - name: "categoryId"
+          in: "query"
+          required: false
+          schema:
+            type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema: { }
+  /api/v1/rental-service/categories/create:
+    post:
+      parameters:
+        - name: Origin
+          in: header
+          required: true
+          schema:
+            type: string
+            example: http://localhost:9000
+        - name: X-CSRF-Token
+          in: header
+          required: true
+          schema:
+            type: string
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CategoryRequest"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+  /api/v1/rental-service/categories/delete:
+    delete:
+      description: ""
+      parameters:
+        - name: Origin
+          in: header
+          required: true
+          schema:
+            type: string
+            example: http://localhost:9000
+        - name: X-CSRF-Token
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: "categoryId"
+          in: "query"
+          required: false
+          schema:
+            type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+  /api/v1/rental-service/categories/update:
+    put:
+      parameters:
+        - name: Origin
+          in: header
+          required: true
+          schema:
+            type: string
+            example: http://localhost:9000
+        - name: X-CSRF-Token
+          in: header
+          required: true
+          schema:
+            type: string
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CategoryRequest"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+  /api/v1/rental-service/security/csrf-token:
+    get:
+      description: ""
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/CsrfToken"
+  /api/v1/rental-service/images/by-id:
+    get:
+      description: ""
+      parameters:
+        - name: "imageId"
+          in: "query"
+          required: false
+          schema:
+            type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            text/plain:
+              schema:
+                type: "string"
+                format: "byte"
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ExceptionResponse"
+  /api/v1/rental-service/images/delete:
+    delete:
+      parameters:
+        - name: Origin
+          in: header
+          required: true
+          schema:
+            type: string
+            example: http://localhost:9000
+        - name: X-CSRF-Token
+          in: header
+          required: true
+          schema:
+            type: string
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: "array"
+              items:
+                type: "string"
+                format: "uuid"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+  /api/v1/rental-service/images/upload:
+    post:
+      parameters:
+        - name: Origin
+          in: header
+          required: true
+          schema:
+            type: string
+            example: http://localhost:9000
+        - name: X-CSRF-Token
+          in: header
+          required: true
+          schema:
+            type: string
+      description: ""
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+  /api/v1/rental-service/documents/by-id:
+    get:
+      description: ""
+      parameters:
+        - name: "documentId"
+          in: "query"
+          required: false
+          schema:
+            type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            text/plain:
+              schema:
+                type: "string"
+                format: "byte"
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ExceptionResponse"
+  /api/v1/rental-service/documents/delete:
+    delete:
+      parameters:
+        - name: Origin
+          in: header
+          required: true
+          schema:
+            type: string
+            example: http://localhost:9000
+        - name: X-CSRF-Token
+          in: header
+          required: true
+          schema:
+            type: string
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: "array"
+              items:
+                type: "string"
+                format: "uuid"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+  /api/v1/rental-service/documents/upload:
+    post:
+      parameters:
+        - name: Origin
+          in: header
+          required: true
+          schema:
+            type: string
+            example: http://localhost:9000
+        - name: X-CSRF-Token
+          in: header
+          required: true
+          schema:
+            type: string
+      description: ""
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+  /api/v1/rental-service/identities:
+    get:
+      description: ""
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/IdentityShortResponse"
+  /api/v1/rental-service/identities/by-id:
+    get:
+      description: ""
+      parameters:
+        - name: "identityId"
+          in: "query"
+          required: false
+          schema:
+            type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema: { }
+  /api/v1/rental-service/identities/change-password:
+    put:
+      parameters:
+        - name: Origin
+          in: header
+          required: true
+          schema:
+            type: string
+            example: http://localhost:9000
+        - name: X-CSRF-Token
+          in: header
+          required: true
+          schema:
+            type: string
+      description: ""
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+  /api/v1/rental-service/identities/change-status:
+    put:
+      parameters:
+        - name: Origin
+          in: header
+          required: true
+          schema:
+            type: string
+            example: http://localhost:9000
+        - name: X-CSRF-Token
+          in: header
+          required: true
+          schema:
+            type: string
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/IdentityRequest"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+  /api/v1/rental-service/identities/create:
+    post:
+      parameters:
+        - name: Origin
+          in: header
+          required: true
+          schema:
+            type: string
+            example: http://localhost:9000
+        - name: X-CSRF-Token
+          in: header
+          required: true
+          schema:
+            type: string
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/IdentityRequest"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+  /api/v1/rental-service/identities/delete:
+    delete:
+      description: ""
+      parameters:
+        - name: Origin
+          in: header
+          required: true
+          schema:
+            type: string
+            example: http://localhost:9000
+        - name: X-CSRF-Token
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: "identityId"
+          in: "query"
+          required: false
+          schema:
+            type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+  /api/v1/rental-service/identities/remove-image:
+    delete:
+      description: ""
+      parameters:
+        - name: Origin
+          in: header
+          required: true
+          schema:
+            type: string
+            example: http://localhost:9000
+        - name: X-CSRF-Token
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: "identityId"
+          in: "query"
+          required: false
+          schema:
+            type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+  /api/v1/rental-service/identities/update:
+    put:
+      parameters:
+        - name: Origin
+          in: header
+          required: true
+          schema:
+            type: string
+            example: http://localhost:9000
+        - name: X-CSRF-Token
+          in: header
+          required: true
+          schema:
+            type: string
+      description: ""
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+  /api/v1/rental-service/identities/upload-image:
+    post:
+      description: ""
+      parameters:
+        - name: Origin
+          in: header
+          required: true
+          schema:
+            type: string
+            example: http://localhost:9000
+        - name: X-CSRF-Token
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: "identityId"
+          in: "query"
+          required: false
+          schema:
+            type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+  /api/v1/rental-service/properties:
+    get:
+      description: ""
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/PropertyWithCategoryResponse"
+  /api/v1/rental-service/properties/by-id:
+    get:
+      description: ""
+      parameters:
+        - name: "propertyId"
+          in: "query"
+          required: false
+          schema:
+            type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema: { }
+  /api/v1/rental-service/properties/create:
+    post:
+      parameters:
+        - name: Origin
+          in: header
+          required: true
+          schema:
+            type: string
+            example: http://localhost:9000
+        - name: X-CSRF-Token
+          in: header
+          required: true
+          schema:
+            type: string
+      description: ""
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+  /api/v1/rental-service/properties/delete:
+    delete:
+      description: ""
+      parameters:
+        - name: Origin
+          in: header
+          required: true
+          schema:
+            type: string
+            example: http://localhost:9000
+        - name: X-CSRF-Token
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: "propertyId"
+          in: "query"
+          required: false
+          schema:
+            type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+  /api/v1/rental-service/properties/remove-documents:
+    delete:
+      description: ""
+      parameters:
+        - name: Origin
+          in: header
+          required: true
+          schema:
+            type: string
+            example: http://localhost:9000
+        - name: X-CSRF-Token
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: "propertyId"
+          in: "query"
+          required: false
+          schema:
+            type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DocumentRequest"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+  /api/v1/rental-service/properties/remove-images:
+    delete:
+      description: ""
+      parameters:
+        - name: Origin
+          in: header
+          required: true
+          schema:
+            type: string
+            example: http://localhost:9000
+        - name: X-CSRF-Token
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: "propertyId"
+          in: "query"
+          required: false
+          schema:
+            type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ImageRequest"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+  /api/v1/rental-service/properties/update:
+    put:
+      parameters:
+        - name: Origin
+          in: header
+          required: true
+          schema:
+            type: string
+            example: http://localhost:9000
+        - name: X-CSRF-Token
+          in: header
+          required: true
+          schema:
+            type: string
+      description: ""
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+  /api/v1/rental-service/properties/upload-documents:
+    post:
+      description: ""
+      parameters:
+        - name: Origin
+          in: header
+          required: true
+          schema:
+            type: string
+            example: http://localhost:9000
+        - name: X-CSRF-Token
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: "propertyId"
+          in: "query"
+          required: false
+          schema:
+            type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+  /api/v1/rental-service/properties/upload-images:
+    post:
+      description: ""
+      parameters:
+        - name: Origin
+          in: header
+          required: true
+          schema:
+            type: string
+            example: http://localhost:9000
+        - name: X-CSRF-Token
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: "propertyId"
+          in: "query"
+          required: false
+          schema:
+            type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+  /api/v1/rental-service/advertisements:
+    get:
+      description: ""
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/AdvertisementShortResponse"
+  /api/v1/rental-service/advertisements/by-id:
+    get:
+      description: ""
+      parameters:
+        - name: "advertisementId"
+          in: "query"
+          required: false
+          schema:
+            type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema: { }
+  /api/v1/rental-service/advertisements/create:
+    post:
+      parameters:
+        - name: Origin
+          in: header
+          required: true
+          schema:
+            type: string
+            example: http://localhost:9000
+        - name: X-CSRF-Token
+          in: header
+          required: true
+          schema:
+            type: string
+      description: ""
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+  /api/v1/rental-service/advertisements/delete:
+    delete:
+      description: ""
+      parameters:
+        - name: Origin
+          in: header
+          required: true
+          schema:
+            type: string
+            example: http://localhost:9000
+        - name: X-CSRF-Token
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: "advertisementId"
+          in: "query"
+          required: false
+          schema:
+            type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+  /api/v1/rental-service/advertisements/rent-property:
+    put:
+      parameters:
+        - name: Origin
+          in: header
+          required: true
+          schema:
+            type: string
+            example: http://localhost:9000
+        - name: X-CSRF-Token
+          in: header
+          required: true
+          schema:
+            type: string
+      description: ""
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+  /api/v1/rental-service/advertisements/update:
+    put:
+      parameters:
+        - name: Origin
+          in: header
+          required: true
+          schema:
+            type: string
+            example: http://localhost:9000
+        - name: X-CSRF-Token
+          in: header
+          required: true
+          schema:
+            type: string
+      description: ""
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+components:
+  schemas:
+    ExceptionResponse:
+      type: "object"
+      properties:
+        status:
+          type: "string"
+        code:
+          type: "integer"
+          format: "int32"
+        message:
+          type: "string"
+      required:
+        - "status"
+        - "code"
+        - "message"
+    CategoryShortResponse:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+          nullable: true
+        name:
+          type: "string"
+          nullable: true
+        description:
+          type: "string"
+          nullable: true
+    ImageResponse:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+          nullable: true
+        name:
+          type: "string"
+          nullable: true
+        contentType:
+          type: "string"
+          nullable: true
+        preview:
+          type: "boolean"
+          nullable: true
+    DocumentResponse:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+          nullable: true
+        name:
+          type: "string"
+          nullable: true
+        contentType:
+          type: "string"
+          nullable: true
+    PropertyShortResponse:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+          nullable: true
+        name:
+          type: "string"
+          nullable: true
+        address:
+          type: "string"
+          nullable: true
+        description:
+          type: "string"
+          nullable: true
+        images:
+          type: "array"
+          nullable: true
+          items:
+            $ref: "#/components/schemas/ImageResponse"
+        documents:
+          type: "array"
+          nullable: true
+          items:
+            $ref: "#/components/schemas/DocumentResponse"
+    CategoryFullResponse:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+          nullable: true
+        name:
+          type: "string"
+          nullable: true
+        description:
+          type: "string"
+          nullable: true
+        properties:
+          type: "array"
+          nullable: true
+          items:
+            $ref: "#/components/schemas/PropertyShortResponse"
+    CategoryRequest:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+          nullable: true
+        name:
+          type: "string"
+          nullable: true
+        description:
+          type: "string"
+          nullable: true
+    CsrfToken:
+      type: "object"
+      properties:
+        token:
+          type: "string"
+          format: "uuid"
+      required:
+        - "token"
+    IdentityShortResponse:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+          nullable: true
+        username:
+          type: "string"
+          nullable: true
+        email:
+          type: "string"
+          nullable: true
+        firstname:
+          type: "string"
+          nullable: true
+        lastname:
+          type: "string"
+          nullable: true
+        patronymic:
+          type: "string"
+          nullable: true
+        image:
+          nullable: true
+          $ref: "#/components/schemas/ImageResponse"
+    PropertyWithCategoryResponse:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+          nullable: true
+        category:
+          nullable: true
+          $ref: "#/components/schemas/CategoryShortResponse"
+        name:
+          type: "string"
+          nullable: true
+        address:
+          type: "string"
+          nullable: true
+        description:
+          type: "string"
+          nullable: true
+        images:
+          type: "array"
+          nullable: true
+          items:
+            $ref: "#/components/schemas/ImageResponse"
+        documents:
+          type: "array"
+          nullable: true
+          items:
+            $ref: "#/components/schemas/DocumentResponse"
+    IdentityFullResponse:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+          nullable: true
+        username:
+          type: "string"
+          nullable: true
+        email:
+          type: "string"
+          nullable: true
+        firstname:
+          type: "string"
+          nullable: true
+        lastname:
+          type: "string"
+          nullable: true
+        patronymic:
+          type: "string"
+          nullable: true
+        image:
+          nullable: true
+          $ref: "#/components/schemas/ImageResponse"
+        ownerProperties:
+          type: "array"
+          nullable: true
+          items:
+            $ref: "#/components/schemas/PropertyWithCategoryResponse"
+        tenantProperties:
+          type: "array"
+          nullable: true
+          items:
+            $ref: "#/components/schemas/PropertyWithCategoryResponse"
+    IdentityRequest:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+          nullable: true
+        authority:
+          type: "string"
+          nullable: true
+          enum:
+            - "ADMIN"
+            - "USER"
+        username:
+          type: "string"
+          nullable: true
+        password:
+          type: "string"
+          nullable: true
+        email:
+          type: "string"
+          nullable: true
+        enabled:
+          type: "boolean"
+          nullable: true
+        firstname:
+          type: "string"
+          nullable: true
+        lastname:
+          type: "string"
+          nullable: true
+        patronymic:
+          type: "string"
+          nullable: true
+    AdvertisementShortResponse:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+          nullable: true
+        title:
+          type: "string"
+          nullable: true
+        description:
+          type: "string"
+          nullable: true
+        price:
+          type: "number"
+          format: "double"
+          nullable: true
+        date:
+          type: "string"
+          nullable: true
+    PropertyFullResponse:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+          nullable: true
+        category:
+          nullable: true
+          $ref: "#/components/schemas/CategoryShortResponse"
+        name:
+          type: "string"
+          nullable: true
+        address:
+          type: "string"
+          nullable: true
+        description:
+          type: "string"
+          nullable: true
+        advertisement:
+          nullable: true
+          $ref: "#/components/schemas/AdvertisementShortResponse"
+        owner:
+          nullable: true
+          $ref: "#/components/schemas/IdentityShortResponse"
+        tenant:
+          nullable: true
+          $ref: "#/components/schemas/IdentityShortResponse"
+        images:
+          type: "array"
+          nullable: true
+          items:
+            $ref: "#/components/schemas/ImageResponse"
+        documents:
+          type: "array"
+          nullable: true
+          items:
+            $ref: "#/components/schemas/DocumentResponse"
+    DocumentRequest:
+      type: "object"
+      properties:
+        documentIds:
+          type: "array"
+          items:
+            type: "string"
+            format: "uuid"
+      required:
+        - "documentIds"
+    ImageRequest:
+      type: "object"
+      properties:
+        imageIds:
+          type: "array"
+          items:
+            type: "string"
+            format: "uuid"
+      required:
+        - "imageIds"
+    AdvertisementFullResponse:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+          nullable: true
+        title:
+          type: "string"
+          nullable: true
+        description:
+          type: "string"
+          nullable: true
+        property:
+          nullable: true
+          $ref: "#/components/schemas/PropertyWithCategoryResponse"
+        price:
+          type: "number"
+          format: "double"
+          nullable: true
+        date:
+          type: "string"
+          nullable: true

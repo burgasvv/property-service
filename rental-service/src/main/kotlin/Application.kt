@@ -4,6 +4,7 @@ import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import org.burgas.database.configureDatabase
+import org.burgas.documentation.configureSwagger
 import org.burgas.kafka.configureKafka
 import org.burgas.routing.*
 import org.burgas.security.configureSecurity
@@ -23,6 +24,7 @@ fun Application.module() {
     configureSecurity()
     configureDatabase()
     configureKafka()
+    configureSwagger()
 
     configureSecurityRouting()
     configureImageRouting()
