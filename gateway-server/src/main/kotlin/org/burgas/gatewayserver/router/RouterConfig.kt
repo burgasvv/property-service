@@ -10,6 +10,7 @@ import org.springframework.http.HttpHeaders
 class RouterConfig {
 
     private final val rentalServiceUri = "http://localhost:9000"
+    private final val constructionServiceUri = "http://localhost:9010"
 
     @Bean
     fun routerLocator(routeLocatorBuilder: RouteLocatorBuilder): RouteLocator {
@@ -19,6 +20,12 @@ class RouterConfig {
                     .path("/api/v1/rental-service/**")
                     .filters { filterSpec -> filterSpec.addRequestHeader(HttpHeaders.ORIGIN, rentalServiceUri) }
                     .uri(rentalServiceUri)
+            }
+            .route {
+                it
+                    .path("/api/v1/construction-service/**")
+                    .filters { filterSpec -> filterSpec.addRequestHeader(HttpHeaders.ORIGIN, constructionServiceUri) }
+                    .uri(constructionServiceUri)
             }
             .build()
     }

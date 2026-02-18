@@ -4,6 +4,15 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/construction-service" />
+        <option name="gradleJvm" value="25" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/construction-service" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
         <option name="externalProjectPath" value="$PROJECT_DIR$/gateway-server" />
         <option name="gradleJvm" value="25" />
         <option name="modules">

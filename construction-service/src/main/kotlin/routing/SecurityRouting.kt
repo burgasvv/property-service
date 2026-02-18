@@ -1,0 +1,33 @@
+package org.burgas.routing
+
+import io.ktor.http.HttpStatusCode
+import io.ktor.server.application.Application
+import io.ktor.server.response.respond
+import io.ktor.server.routing.get
+import io.ktor.server.routing.route
+import io.ktor.server.routing.routing
+import io.ktor.server.sessions.get
+import io.ktor.server.sessions.sessions
+import io.ktor.server.sessions.set
+import org.burgas.security.CsrfToken
+import java.util.UUID
+
+fun Application.configureSecurityRouting() {
+
+    routing {
+
+        route("/api/v1/construction-service/security") {
+
+            get("/csrf-token") {
+                val csrfToken = call.sessions.get(CsrfToken::class)
+                if (csrfToken != null) {
+                    call.respond(HttpStatusCode.OK, csrfToken)
+                } else {
+                    val newCsrfToken = CsrfToken(UUID.randomUUID())
+                    call.sessions.set(newCsrfToken, CsrfToken::class)
+                    call.respond(HttpStatusCode.OK, newCsrfToken)
+                }
+            }
+        }
+    }
+}
