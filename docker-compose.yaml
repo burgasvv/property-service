@@ -1,3 +1,4 @@
 
 include:
   - rental-service/docker-compose.yaml
+  - construction-service/docker-compose.yaml

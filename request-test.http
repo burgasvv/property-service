@@ -1,6 +1,10 @@
 
 
 
+### Rental Service Requests
+
+
+
 ### Security Requests
 
 
@@ -287,3 +291,18 @@ Authorization: Basic zagor@gmail.com zagor
     "tenantId": "df7d4c8d-d46b-41e0-a979-e0b8a9d0d873",
     "advertisementId": "b434aba1-7458-4cfe-ae46-94de08bdec9a"
 }
+
+
+
+### Construction Service Requests
+
+
+
+### Security Requests
+
+
+
+###
+GET /api/v1/construction-service/security/csrf-token
+Host: localhost:8765
+Accept: application/json

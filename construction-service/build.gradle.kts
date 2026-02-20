@@ -28,6 +28,12 @@ dependencies {
     implementation("io.ktor:ktor-server-csrf:3.4.0")
     implementation("io.ktor:ktor-server-cors:3.4.0")
     implementation("io.ktor:ktor-server-sessions:3.4.0")
+    implementation("org.jetbrains.exposed:exposed-core:0.61.0")
+    implementation("org.jetbrains.exposed:exposed-jdbc:0.61.0")
+    implementation("org.jetbrains.exposed:exposed-dao:0.61.0")
+    implementation("org.postgresql:postgresql:42.7.9")
+    implementation("redis.clients:jedis:7.2.1")
+    implementation("org.mindrot:jbcrypt:0.4")
     testImplementation("io.ktor:ktor-server-test-host")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:2.3.10")
 }
