@@ -1,21 +1,13 @@
 package org.burgas.security
 
-import io.ktor.http.HttpHeaders
-import io.ktor.http.HttpMethod
-import io.ktor.http.HttpStatusCode
+import io.ktor.http.*
 import io.ktor.server.application.*
-import io.ktor.server.auth.UserIdPrincipal
-import io.ktor.server.auth.UserPasswordCredential
-import io.ktor.server.auth.authentication
-import io.ktor.server.auth.basic
-import io.ktor.server.auth.digestAuthenticationCredentials
-import io.ktor.server.auth.form
-import io.ktor.server.plugins.cors.routing.CORS
-import io.ktor.server.plugins.csrf.CSRF
+import io.ktor.server.auth.*
+import io.ktor.server.plugins.cors.routing.*
+import io.ktor.server.plugins.csrf.*
 import io.ktor.server.plugins.statuspages.*
-import io.ktor.server.response.respond
-import io.ktor.server.sessions.Sessions
-import io.ktor.server.sessions.cookie
+import io.ktor.server.response.*
+import io.ktor.server.sessions.*
 import kotlinx.serialization.Serializable
 import org.burgas.database.Authority
 import org.burgas.database.IdentityEntity
@@ -23,7 +15,7 @@ import org.burgas.database.IdentityTable
 import org.burgas.serialization.UUIDSerializer
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.mindrot.jbcrypt.BCrypt
-import java.util.UUID
+import java.util.*
 
 @Serializable
 data class ExceptionResponse(

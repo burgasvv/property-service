@@ -1,9 +1,8 @@
 package org.burgas
 
 import io.ktor.server.application.*
-import io.ktor.server.engine.embeddedServer
-import io.ktor.server.http.content.resourceClasspathResource
-import io.ktor.server.netty.Netty
+import io.ktor.server.engine.*
+import io.ktor.server.netty.*
 import org.burgas.database.configureDatabase
 import org.burgas.routing.configureDocumentRouting
 import org.burgas.routing.configureIdentityRouting
