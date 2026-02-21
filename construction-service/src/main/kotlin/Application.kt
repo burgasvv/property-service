@@ -2,8 +2,12 @@ package org.burgas
 
 import io.ktor.server.application.*
 import io.ktor.server.engine.embeddedServer
+import io.ktor.server.http.content.resourceClasspathResource
 import io.ktor.server.netty.Netty
 import org.burgas.database.configureDatabase
+import org.burgas.routing.configureDocumentRouting
+import org.burgas.routing.configureIdentityRouting
+import org.burgas.routing.configureImageRouting
 import org.burgas.routing.configureSecurityRouting
 import org.burgas.security.configureSecurity
 import org.burgas.serialization.configureSerialization
@@ -24,4 +28,7 @@ fun Application.module() {
     configureDatabase()
 
     configureSecurityRouting()
+    configureImageRouting()
+    configureDocumentRouting()
+    configureIdentityRouting()
 }

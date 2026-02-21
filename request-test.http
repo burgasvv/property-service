@@ -306,3 +306,85 @@ Authorization: Basic zagor@gmail.com zagor
 GET /api/v1/construction-service/security/csrf-token
 Host: localhost:8765
 Accept: application/json
+
+
+
+### Identity Requests
+
+
+
+###
+GET /api/v1/construction-service/identities
+Host: localhost:8765
+Accept: application/json
+Authorization: Basic burgasvv@gmail.com burgasvv
+
+###
+GET /api/v1/construction-service/identities/by-id?identityId=5c7334fd-8215-4abb-ba91-76609eac15b9
+Host: localhost:8765
+Accept: application/json
+Authorization: Basic burgasvv@gmail.com burgasvv
+
+###
+POST /api/v1/construction-service/identities/create
+Host: localhost:8765
+Accept: application/json
+Content-Type: application/json
+X-Csrf-Token: 4b1316dd-381d-4852-b342-31d1717dd014
+
+{
+    "authority": "USER",
+    "username": "zagorulko",
+    "password": "zagor",
+    "email": "zagor@gmail.com",
+    "enabled": true,
+    "firstname": "Загорулько",
+    "lastname": "Борис",
+    "patronymic": "Юрьевич"
+}
+
+###
+PUT /api/v1/construction-service/identities/update
+Host: localhost:8765
+Accept: application/json
+Content-Type: application/json
+X-Csrf-Token: 3f6d60ca-f614-4ae9-ae63-351db89ff03c
+Authorization: Basic zagor@gmail.com zagor
+
+{
+    "id": "663041ee-0151-486d-b747-7f064d6a9e87",
+    "username": "zagor"
+}
+
+###
+PUT /api/v1/construction-service/identities/change-status
+Host: localhost:8765
+Accept: application/json
+Content-Type: application/json
+X-Csrf-Token: 3f6d60ca-f614-4ae9-ae63-351db89ff03c
+Authorization: Basic burgasvv@gmail.com burgasvv
+
+{
+    "id": "663041ee-0151-486d-b747-7f064d6a9e87",
+    "enabled": true
+}
+
+###
+PUT /api/v1/construction-service/identities/change-password
+Host: localhost:8765
+Accept: application/json
+Content-Type: application/json
+X-Csrf-Token: 3f6d60ca-f614-4ae9-ae63-351db89ff03c
+Authorization: Basic zagor@gmail.com zagor111
+
+{
+    "id": "663041ee-0151-486d-b747-7f064d6a9e87",
+    "password": "zagor"
+}
+
+###
+DELETE /api/v1/construction-service/identities/delete?identityId=663041ee-0151-486d-b747-7f064d6a9e87
+Host: localhost:8765
+Accept: application/json
+X-Csrf-Token: 3f6d60ca-f614-4ae9-ae63-351db89ff03c
+Authorization: Basic zagor@gmail.com zagor

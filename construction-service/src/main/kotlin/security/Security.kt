@@ -4,6 +4,12 @@ import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.*
+import io.ktor.server.auth.UserIdPrincipal
+import io.ktor.server.auth.UserPasswordCredential
+import io.ktor.server.auth.authentication
+import io.ktor.server.auth.basic
+import io.ktor.server.auth.digestAuthenticationCredentials
+import io.ktor.server.auth.form
 import io.ktor.server.plugins.cors.routing.CORS
 import io.ktor.server.plugins.csrf.CSRF
 import io.ktor.server.plugins.statuspages.*
@@ -11,7 +17,12 @@ import io.ktor.server.response.respond
 import io.ktor.server.sessions.Sessions
 import io.ktor.server.sessions.cookie
 import kotlinx.serialization.Serializable
+import org.burgas.database.Authority
+import org.burgas.database.IdentityEntity
+import org.burgas.database.IdentityTable
 import org.burgas.serialization.UUIDSerializer
+import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
+import org.mindrot.jbcrypt.BCrypt
 import java.util.UUID
 
 @Serializable
@@ -22,6 +33,46 @@ data class ExceptionResponse(
 )
 
 fun Application.configureSecurity() {
+
+    authentication {
+
+        basic(name = "basic-auth-all") {
+            validate { credentials ->
+
+                newSuspendedTransaction {
+                    val identityEntity = IdentityEntity.find { IdentityTable.email eq credentials.name }.singleOrNull()
+                    if (
+                        identityEntity != null && identityEntity.enabled &&
+                        BCrypt.checkpw(credentials.password, identityEntity.password)
+                    ) {
+                        UserPasswordCredential(credentials.name, credentials.password)
+
+                    } else {
+                        null
+                    }
+                }
+            }
+        }
+
+        basic(name = "basic-auth-admin") {
+            validate { credentials ->
+
+                newSuspendedTransaction {
+                    val identityEntity = IdentityEntity.find { IdentityTable.email eq credentials.name }.singleOrNull()
+                    if (
+                        identityEntity != null && identityEntity.enabled &&
+                        BCrypt.checkpw(credentials.password, identityEntity.password) &&
+                        identityEntity.authority == Authority.ADMIN
+                    ) {
+                        UserPasswordCredential(credentials.name, credentials.password)
+
+                    } else {
+                        null
+                    }
+                }
+            }
+        }
+    }
 
     install(StatusPages) {
         exception<Throwable> { call, cause ->

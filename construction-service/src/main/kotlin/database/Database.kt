@@ -1,7 +1,6 @@
 package org.burgas.database
 
 import io.ktor.server.application.*
-import io.ktor.util.StringValues
 import kotlinx.serialization.Serializable
 import org.burgas.serialization.UUIDSerializer
 import org.jetbrains.exposed.dao.EntityClass
