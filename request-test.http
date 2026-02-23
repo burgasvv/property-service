@@ -388,3 +388,86 @@ Host: localhost:8765
 Accept: application/json
 X-Csrf-Token: 3f6d60ca-f614-4ae9-ae63-351db89ff03c
 Authorization: Basic zagor@gmail.com zagor
+
+
+
+### Building Requests
+
+
+
+###
+GET /api/v1/construction-service/buildings
+Host: localhost:8765
+Accept: application/json
+
+###
+GET /api/v1/construction-service/buildings/by-id?buildingId=77dbcb22-ad63-407f-b452-224d3d70634a
+Host: localhost:8765
+Accept: application/json
+
+###
+POST /api/v1/construction-service/buildings/create
+Host: localhost:8765
+Accept: application/json
+Content-Type: application/json
+X-Csrf-Token: ee502178-bab6-4dde-90d6-6d5c32ff5566
+Authorization: Basic burgasvv@gmail.com burgasvv
+
+{
+    "address": "г.Москва, ул.Долинская, д.15",
+    "materials": "Материалы используемые для строительства здания",
+    "floors": 15,
+    "onObject": 50,
+    "description": "Описание данного здания",
+    "identityId": "5c7334fd-8215-4abb-ba91-76609eac15b9",
+    "built": false
+}
+
+###
+PUT /api/v1/construction-service/buildings/update
+Host: localhost:8765
+Accept: application/json
+Content-Type: application/json
+X-Csrf-Token: ee502178-bab6-4dde-90d6-6d5c32ff5566
+Authorization: Basic burgasvv@gmail.com burgasvv
+
+{
+    "id": "77dbcb22-ad63-407f-b452-224d3d70634a",
+    "floors": 20
+}
+
+###
+DELETE /api/v1/construction-service/buildings/remove-images?buildingId=77dbcb22-ad63-407f-b452-224d3d70634a
+Host: localhost:8765
+Accept: application/json
+Content-Type: application/json
+X-Csrf-Token: 50e445ef-37d9-46ac-bfd0-cc5a15f5b116
+Authorization: Basic burgasvv@gmail.com burgasvv
+
+{
+    "imageIds": [
+        "890843b5-9bdc-47d4-ae83-91ee52b0337b",
+        "e7703767-1c01-45f8-8d0b-410a308cbd18"
+    ]
+}
+
+###
+DELETE /api/v1/construction-service/buildings/remove-documents?buildingId=77dbcb22-ad63-407f-b452-224d3d70634a
+Host: localhost:8765
+Accept: application/json
+Content-Type: application/json
+X-Csrf-Token: 50e445ef-37d9-46ac-bfd0-cc5a15f5b116
+Authorization: Basic burgasvv@gmail.com burgasvv
+
+{
+    "documentIds": [
+        "afbdd5f2-f2d1-4d72-8746-a2747548b47f"
+    ]
+}
+
+###
+DELETE /api/v1/construction-service/buildings/delete?buildingId=77dbcb22-ad63-407f-b452-224d3d70634a
+Host: localhost:8765
+Accept: application/json
+X-Csrf-Token: 50e445ef-37d9-46ac-bfd0-cc5a15f5b116
+Authorization: Basic burgasvv@gmail.com burgasvv

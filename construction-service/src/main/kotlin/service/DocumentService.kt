@@ -36,27 +36,26 @@ class DocumentService {
         context = Dispatchers.Default,
         transactionIsolation = Connection.TRANSACTION_READ_COMMITTED
     ) {
-        val documentResponses: MutableList<DocumentResponse> = mutableListOf()
+        val documentEntities: MutableList<DocumentEntity> = mutableListOf()
 
         multiPartData.forEachPart { partData ->
 
-            if (partData.contentType?.contentType != "image")
+            if (partData.contentType?.contentType != "application")
                 throw IllegalArgumentException("Wrong part data content type")
 
             if (partData is PartData.FileItem) {
 
-                val documentResponse = DocumentEntity.new {
+                val documentEntity = DocumentEntity.new {
                     this.name = partData.originalFileName ?: throw IllegalArgumentException("Part data name is null")
                     this.contentType = "${partData.contentType?.contentType}/${partData.contentType?.contentSubtype}"
                     this.data = ExposedBlob(partData.provider.invoke().readBuffer.readByteArray())
                 }
-                    .toDocumentResponse()
 
-                documentResponses.add(documentResponse)
+                documentEntities.add(documentEntity)
             }
         }
 
-        documentResponses
+        documentEntities
     }
 
     suspend fun remove(documentId: UUID) = newSuspendedTransaction(

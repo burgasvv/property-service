@@ -266,9 +266,11 @@ data class BuildingShortResponse(
     val floors: Int? = null,
     val onObject: Int? = null,
     val description: String? = null,
-    val built: Boolean? = null
+    val built: Boolean? = null,
+    val images: List<ImageResponse>? = null
 )
 
+@Serializable
 data class BuildingFullResponse(
     @Serializable(with = UUIDSerializer::class)
     val id: UUID? = null,
@@ -281,4 +283,14 @@ data class BuildingFullResponse(
     val built: Boolean? = null,
     val images: List<ImageResponse>? = null,
     val documents: List<DocumentResponse>? = null
+)
+
+@Serializable
+data class ImageRequest(
+    val imageIds: List<@Serializable(with = UUIDSerializer::class) UUID>
+)
+
+@Serializable
+data class DocumentRequest(
+    val documentIds: List<@Serializable(with = UUIDSerializer::class) UUID>
 )
