@@ -89,17 +89,6 @@ class ImageService {
         imageEntities
     }
 
-    suspend fun setPreview(imageId: UUID) = newSuspendedTransaction(
-        db = DatabaseFactory.postgres,
-        context = Dispatchers.Default,
-        transactionIsolation = Connection.TRANSACTION_READ_COMMITTED
-    ) {
-        val imageEntity = ImageEntity.findById(imageId) ?: throw IllegalArgumentException("Image not found")
-        imageEntity.apply {
-            this.preview = true
-        }
-    }
-
     suspend fun remove(imageId: UUID) = newSuspendedTransaction(
         db = DatabaseFactory.postgres,
         context = Dispatchers.Default,
