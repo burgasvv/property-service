@@ -1,5 +1,7 @@
 package org.burgas.routing
 
+import io.github.flaxoos.ktor.server.plugins.kafka.components.toRecord
+import io.github.flaxoos.ktor.server.plugins.kafka.kafkaProducer
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
@@ -8,6 +10,7 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.util.*
 import kotlinx.coroutines.Dispatchers
+import org.apache.kafka.clients.producer.ProducerRecord
 import org.burgas.database.*
 import org.burgas.service.BuildingService
 import org.jetbrains.exposed.dao.load
@@ -118,7 +121,11 @@ fun Application.configureBuildingRouting() {
 
                 post("/create") {
                     val buildingRequest = call.attributes[AttributeKey<BuildingRequest>("buildingRequest")]
-                    buildingService.create(buildingRequest)
+                    val buildingFullResponse = buildingService.create(buildingRequest)
+                    val producerRecord = ProducerRecord(
+                        "building-topic", "create-building", buildingFullResponse.toRecord()
+                    )
+                    kafkaProducer?.send(producerRecord)?.get()
                     call.respond(HttpStatusCode.OK)
                 }
 

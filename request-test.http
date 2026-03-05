@@ -410,7 +410,7 @@ POST /api/v1/construction-service/buildings/create
 Host: localhost:8765
 Accept: application/json
 Content-Type: application/json
-X-Csrf-Token: ee502178-bab6-4dde-90d6-6d5c32ff5566
+X-Csrf-Token: a4fdf451-ce30-44bc-9694-9e1f2062694b
 Authorization: Basic burgasvv@gmail.com burgasvv
 
 {

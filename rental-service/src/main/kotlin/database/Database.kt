@@ -421,3 +421,18 @@ data class RentPropertyRequest(
     @Serializable(with = UUIDSerializer::class)
     val advertisementId: UUID
 )
+
+@Serializable
+data class BuildingFullResponse(
+    @Serializable(with = UUIDSerializer::class)
+    val id: UUID? = null,
+    val address: String? = null,
+    val materials: String? = null,
+    val floors: Int? = null,
+    val onObject: Int? = null,
+    val description: String? = null,
+    val identity: IdentityShortResponse? = null,
+    val built: Boolean? = null,
+    val images: List<ImageResponse>? = null,
+    val documents: List<DocumentResponse>? = null
+)

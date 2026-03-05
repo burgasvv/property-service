@@ -7,6 +7,7 @@ import io.github.flaxoos.ktor.server.plugins.kafka.components.fromRecord
 import io.ktor.server.application.*
 import org.apache.kafka.common.serialization.StringDeserializer
 import org.apache.kafka.common.serialization.StringSerializer
+import org.burgas.database.BuildingFullResponse
 import org.burgas.database.IdentityFullResponse
 
 fun Application.configureKafka() {
@@ -17,6 +18,15 @@ fun Application.configureKafka() {
 
         val identityTopic = TopicName.named("identity-topic")
         topic(identityTopic) {
+            partitions = 1
+            replicas = 1
+            configs {
+                messageTimestampType = MessageTimestampType.CreateTime
+            }
+        }
+
+        val buildingTopic = TopicName.named("building-topic")
+        topic(buildingTopic) {
             partitions = 1
             replicas = 1
             configs {
@@ -44,10 +54,15 @@ fun Application.configureKafka() {
                 val identityFullResponse = fromRecord<IdentityFullResponse>(record.value())
                 println("${record.topic()} :: $identityFullResponse")
             }
+            consumerRecordHandler(buildingTopic) { record ->
+                val buildingFullResponse = fromRecord<BuildingFullResponse>(record.value())
+                println("${record.topic()} :: $buildingFullResponse")
+            }
         }
 
         registerSchemas {
             IdentityFullResponse::class at identityTopic
+            BuildingFullResponse::class at buildingTopic
         }
     }
 }

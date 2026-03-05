@@ -1,4 +1,6 @@
 
+@file:Suppress("VulnerableLibrariesLocal")
+
 plugins {
     kotlin("jvm") version "2.3.0"
     id("io.ktor.plugin") version "3.4.0"
@@ -38,6 +40,14 @@ dependencies {
     implementation("org.mindrot:jbcrypt:0.4")
     implementation("io.ktor:ktor-server-auth:3.4.0")
     implementation("io.ktor:ktor-server-auth:3.4.0")
+    implementation("io.github.flaxoos:ktor-server-kafka:2.2.1")
     testImplementation("io.ktor:ktor-server-test-host")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:2.3.10")
+}
+repositories {
+    mavenCentral()
+    maven {
+        url = uri("https://packages.confluent.io/maven")
+        name = "confluence"
+    }
 }
